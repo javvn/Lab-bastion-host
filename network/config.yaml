@@ -1,0 +1,62 @@
+context:
+  terraform:  true
+  owner:      'jawn'
+  env:        'development'
+  name:       'use1-bastion'
+  project:    'bastion-host'
+  region: "use1"
+  azs:
+    - "use1-az1"
+
+network:
+  vpc:
+    name                    : "${name}-vpc"
+    cidr_block              : '10.100.0.0/16'
+    enable_ipv6             : false
+    enable_vpn_gateway      : false
+    enable_nat_gateway      : false
+    single_nat_gateway      : false
+    map_public_ip_on_launch	: true
+    create_igw              : true
+  subnet_groups:
+    public:
+      name:       "${name}-public-sb"
+      cidr_block:
+        - "10.100.1.0/24"
+    private:
+      name:       "${name}-private-sb"
+      cidr_block:
+        - "10.100.101.0/24"
+  security_groups:
+    ssh:
+      name                    : "${name}-sg-ssh"
+      description             : "Security group for SSH"
+      ingress_with_cidr_blocks:
+        - from_port           : 22
+          to_port             : 22
+          protocol            : "tcp"
+          cidr_blocks         : "0.0.0.0/0"
+          description         : "SSH"
+      egress_with_cidr_blocks :
+        - id                  : "all/all"
+          from_port           : 0
+          to_port             : 0
+          protocol            : "-1"
+          cidr_blocks         : "0.0.0.0/0"
+          description         : "Allow to communicate to the Internet"
+    http:
+      name                    : "${name}-sg-http"
+      description             : "Security group for HTTP"
+      ingress_with_cidr_blocks:
+        - from_port           : 80
+          to_port             : 80
+          protocol            : "tcp"
+          cidr_blocks         : "0.0.0.0/0"
+          description         : "HTTP"
+      egress_with_cidr_blocks :
+        - id                  : "all/all"
+          from_port           : 0
+          to_port             : 0
+          protocol            : "-1"
+          cidr_blocks         : "0.0.0.0/0"
+          description         : "Allow to communicate to the Internet"
