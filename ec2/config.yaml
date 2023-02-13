@@ -1,0 +1,13 @@
+context: {}
+
+ec2:
+  public:
+    instance_type              : "t2.micro"
+    key_name                   : "bastion"
+    monitoring                 : false
+    associate_public_ip_address: false
+  private:
+    instance_type              : "t2.micro"
+    key_name                   : "bastion"
+    monitoring                 : false
+    associate_public_ip_address: false
