@@ -1,4 +1,5 @@
-context: {}
+context:
+  key_path: "/Users/jawn/.ssh/lab-bastion-host"
 
 ec2:
   public:
